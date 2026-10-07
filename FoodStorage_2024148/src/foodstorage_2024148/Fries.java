@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package foodstorage_2024148;
 
-/**
- *
- * @author bruna
- */
-public class Fries {
-    
+import java.time.LocalDate;
+
+
+public class Fries extends FoodItem {
+      public Fries(String name, double weight, LocalDate bestBefore){
+        super("Fries", name, weight, bestBefore);
+    }
 }
