@@ -82,7 +82,7 @@ public class FoodStorage {
     //Remove a food item from the back
     public void removeFromBack(){
         
-        if (isEmpty){
+        if (isEmpty()){
             System.out.println("Storage is empty!");
             return;
         }
@@ -96,7 +96,7 @@ public class FoodStorage {
     //Show the food item at the front
     public void peek(){
         
-         if (isEmpty){
+         if (isEmpty()){
             System.out.println("Storage is empty!");
             return;
     }
@@ -106,7 +106,7 @@ public class FoodStorage {
     // Display all food items
     public void display(){
         
-         if (isEmpty){
+         if (isEmpty()){
             System.out.println("Storage is empty!");
             return;
          }
@@ -138,7 +138,7 @@ public class FoodStorage {
          
          boolean found = false;
          
-         for(int i =0; i < size, i++){
+         for(int i =0; i < size; i++){
              
              int index = (front + i) % capacity;
              
