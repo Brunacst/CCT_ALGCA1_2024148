@@ -73,7 +73,8 @@ public class FoodStorage {
             return;
         }
         
-        System.out.println(foodNames[front]+"removed");
+        System.out.println("\nFood removed successfully!");
+        System.out.println("Removed item: " + foodNames[front]);
         
         front = (front +1) % capacity;
         size--;
@@ -87,7 +88,7 @@ public class FoodStorage {
             return;
         }
         
-        System.out.println(foodNames[rear] + "removed.");
+        System.out.println(foodNames[rear] + " removed.");
         
         rear = (rear - 1 + capacity) % capacity;
         size--;
