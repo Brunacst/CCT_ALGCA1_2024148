@@ -2,54 +2,70 @@ package foodstorage_2024148;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author bruna
- */
+
+// This class stores the information about one food item.
 public class FoodItem {
-    
-    // All info needed for food items
+
+    // Store the type of food, for example Burger or Pizza.
     private String type;
+
+    // Store the name of the food item.
     private String name;
+
+    // Store the weight of the food in grams.
     private double weight;
+
+    // Store the best-before date of the food.
     private LocalDate bestBefore;
+
+    // Store the date and time when the food was added.
     private LocalDateTime timeAdded;
-    
-    //Constructor: to create a new Food item object and initialises the attributes
-    public FoodItem(String type, String name, double weight, LocalDate bestBefore){
-        this.type =type; // stores the food type for exemple "hot dog", in the object's type attribute
-        this.name=name; // stores the name of the food for exemple "Vegan hot dog", in the object's name attribute
-        this.weight=weight; // stores the food weight in kilograms, in the object's weight attribute
-        this.bestBefore=bestBefore; // stores the food Best before date, in the object's bestBefore attribute
-        
-        // Saving the current date and time
+
+    // Create a food item with its details.
+    public FoodItem(String type, String name, double weight, LocalDate bestBefore) {
+        this.type = type;
+        this.name = name;
+        this.weight = weight;
+        this.bestBefore = bestBefore;
+
+        // Save the current date and time.
         this.timeAdded = LocalDateTime.now();
     }
-            
-    //Get the food name
-    public String getName(){
+
+    // Return the food type.
+    public String getType() {
+        return type;
+    }
+
+    // Return the food name.
+    public String getName() {
         return name;
     }
-    
-    //Get the food weight
-    public double getWeight(){
+
+    // Return the food weight.
+    public double getWeight() {
         return weight;
     }
-    //Get the best before date
-    public LocalDate getBestBefore(){
+
+    // Return the best-before date.
+    public LocalDate getBestBefore() {
         return bestBefore;
     }
-        //Get the time when the food was added
-    public LocalDateTime getTimeAdded(){
+
+    // Return the date and time when the food was added.
+    public LocalDateTime getTimeAdded() {
         return timeAdded;
     }
-    
-    //Method to display the food information
-    public void displayInfo(){
-            System.out.println("Food name:" +name);    
-            System.out.println("Weight:" +weight); 
-            System.out.println("Best Before:" +bestBefore); 
-            System.out.println("Time Added:" +timeAdded); 
+
+    // Display all information about the food item.
+    public void displayInfo() {
+        System.out.println("------------------------------");
+        System.out.println("Type: " + type);
+        System.out.println("Name: " + name);
+        System.out.println("Weight: " + weight + " g");
+        System.out.println("Best Before: "+ bestBefore.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        System.out.println("Time Added: " + timeAdded.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
     }
 }
