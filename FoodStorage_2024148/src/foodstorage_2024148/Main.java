@@ -12,7 +12,7 @@ public class Main {
         Scanner myKB = new Scanner(System.in);
 
         //Ask the user for the storage capacity
-        System.out.println("Enter the storage capacity");
+        System.out.println("Enter the storage capacity: ");
         int capacity = Integer.parseInt(myKB.nextLine());
 
         // Create the food storage
@@ -35,7 +35,7 @@ public class Main {
             System.out.println("3. Show first food");
             System.out.println("4. Remove food");
             System.out.println("5. Search food");
-            System.out.println("6. Exit");
+            System.out.println("x. Exit");
             System.out.print("Choose an option: ");
 
             int option = Integer.parseInt(myKB.nextLine());
@@ -147,8 +147,29 @@ public class Main {
                     break;
 
                 case 4:
-                    // Remove the first food item
-                    storage.removeFromFront();
+                    // Choose the removal mode
+                    System.out.println("\nChoose the removal mode:");
+                    System.out.println("1. FIFO (Queue) - Remove the first food");
+                    System.out.println("2. LIFO (Stack) - Remove the last food");
+                    System.out.print("Your choice: ");
+
+                    int removeChoice = Integer.parseInt(myKB.nextLine());
+
+                    switch (removeChoice) {
+                        case 1:
+                            // Remove the first food item
+                            storage.removeFromFront();
+                            break;
+
+                        case 2:
+                            // Remove the last food item
+                            storage.removeFromBack();
+                            break;
+
+                        default:
+                            System.out.println("Invalid removal option.");
+                            break;
+                    }
                     break;
 
                 case 5:
