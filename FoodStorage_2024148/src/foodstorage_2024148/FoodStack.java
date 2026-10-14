@@ -26,38 +26,38 @@ public class FoodStack {
         return top == items.length - 1;
     }
 
-    // Return the number of food items in the Stack.
+    // Return the number of food items in the Stack
     public int size() {
         return top + 1;
     }
 
-    // Add a food item to the top of the Stack.
-    // O(1): this operation uses a fixed number of steps.
+    // Add a food item to the top of the Stack
+    // O(1): the item is added directly to the top
     public boolean push(FoodItem item) {
         if (isFull()) {
             return false; // There is no free space.
         }
 
-        top++;             // Move the top position up.
-        items[top] = item; // Store the item at the new top.
+        top++;             // Move the top position up
+        items[top] = item; // Store the item at the new top
         return true;
     }
 
-    // Remove and return the food item at the top.
-    // O(1): this operation uses a fixed number of steps.
+    // Remove and return the food item at the top
+    // O(1): the top item is removed directly
     public FoodItem pop() {
         if (isEmpty()) {
-            return null; // There is no item to remove.
+            return null; // There is no item to remove
         }
 
-        FoodItem item = items[top]; // Keep the item before removing it.
-        items[top] = null;          // Clear that array space.
-        top--;                      // Move the top position down.
+        FoodItem item = items[top]; // Keep the item before removing it
+        items[top] = null;          // Clear that array space
+        top--;                      // Move the top position down
         return item;
     }
 
-    // Show the item at the top without removing it.
-    // O(1): the top item is accessed directly.
+    // Show the item at the top without removing it
+    // O(1): the top item is accessed directly
     public FoodItem peek() {
         if (isEmpty()) {
             return null; // There is no item to show.
@@ -94,7 +94,7 @@ public class FoodStack {
         }
 
         if (!found) {
-            System.out.println("Food item not found.");
+            System.out.println("Food item not found with this name!");
         }
     }
 }
