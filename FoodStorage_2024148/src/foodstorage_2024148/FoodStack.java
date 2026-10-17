@@ -1,27 +1,27 @@
 package foodstorage_2024148;
 
-// A Stack follows LIFO: the last item added is the first one removed.
+// A Stack follows LIFO: the last item added is the first one removed
 public class FoodStack {
 
-    // This array stores the food items.
+    // This array stores the food items
     private final FoodItem[] items;
 
-    // This number shows the position of the top item.
-    // -1 means the Stack is empty.
+    // This stores the position of the top item
+    // -1 means the stack is empty
     private int top;
 
-    // Create a Stack with the capacity chosen by the user.
+    // Create a stack with the capacity chosen by the user
     public FoodStack(int capacity) {
         items = new FoodItem[capacity];
         top = -1;
     }
 
-    // Check if there are no food items.
+    // Check if there are no food items
     public boolean isEmpty() {
         return top == -1;
     }
 
-    // Check if every space in the array is being used.
+    // Check if every space in the array is being used
     public boolean isFull() {
         return top == items.length - 1;
     }
@@ -35,10 +35,10 @@ public class FoodStack {
     // O(1): the item is added directly to the top
     public boolean push(FoodItem item) {
         if (isFull()) {
-            return false; // There is no free space.
+            return false; // There is no free space
         }
 
-        top++;             // Move the top position up
+        top++;             // Move top to the next position
         items[top] = item; // Store the item at the new top
         return true;
     }
@@ -52,7 +52,7 @@ public class FoodStack {
 
         FoodItem item = items[top]; // Keep the item before removing it
         items[top] = null;          // Clear that array space
-        top--;                      // Move the top position down
+        top--;                      // Move top to the previous position
         return item;
     }
 
@@ -66,26 +66,26 @@ public class FoodStack {
         return items[top];
     }
 
-    // Show all food items, starting from the top.
-    // O(n): the method may visit every item.
+    // Show all food items, starting from the top
+    // O(n): the method may visit every item
     public void display() {
         if (isEmpty()) {
             System.out.println("Storage is empty.");
             return;
         }
 
-        // Start at the top and move down through the array.
+        // Start at the top and move down through the array
         for (int i = top; i >= 0; i--) {
             items[i].displayInfo();
         }
     }
 
-    // Search for food items by name.
-    // O(n): the method may check every item.
+    // Search for food items by name
+    // O(n): the method may check every item
     public void search(String name) {
         boolean found = false;
 
-        // Check each stored item, starting from the top.
+        // Check each stored item, starting from the top
         for (int i = top; i >= 0; i--) {
             if (items[i].getName().equalsIgnoreCase(name)) {
                 items[i].displayInfo();

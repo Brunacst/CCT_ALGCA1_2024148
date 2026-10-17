@@ -1,204 +1,159 @@
 package foodstorage_2024148;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Main {
+    // The chef can choose a capacity from 1 to 10
+    private static final int MAX_CAPACITY = 10;
+    private static final String[] FOOD_TYPES = {"Burger", "Pizza", "Fries", "Sandwich", "Hotdog"};
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) { // My Entrypoint
         Scanner myKB = new Scanner(System.in);
 
-        //Ask the user for the storage capacity
-        System.out.println("Enter the storage capacity: ");
-        int capacity = Integer.parseInt(myKB.nextLine());
+        // Keep showing the first menu until the chef exits
+        while (true) {
+            System.out.println("\n================================");
+            System.out.println("     FOOD STORAGE SYSTEM");
+            System.out.println("================================");
+            System.out.println("\nChoose your storage system today:");
+            System.out.println("1. Stack (LIFO): Add and Remove Food From The Same End");
+            System.out.println("2. Circular Queue (FIFO): Add at One End and Remove From the Other End");
+            System.out.println("3. Exit");
+            
+            // Only accepts options from 1 to 3
+            int choice = InputValidator.readInt(myKB, "Choose an option: ", 1, 3);
+            if (choice == 3) {
+                break;
+            }
 
-        // Create the food storage
-        FoodStorage storage = new FoodStorage(capacity);
-        
-        // Create the date format
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            // Ask how many food items the storage can hold
+            int capacity = InputValidator.readInt(myKB, "Choose capacity (1-10): ", 1, MAX_CAPACITY);
 
-        boolean running = true;
-        // Repeat the menu while the program is running
-        while (running) {
 
-            System.out.println("\n==============================");
-            System.out.println("      FAST FOOD STORAGE");
+            // Create the selected storage system with the chosen capacity
+            // Choice == 1(true) para Stack option // if false = Circular Queue option
+            FoodStorage storage = new FoodStorage(choice == 1, capacity);
 
-            System.out.println("==============================");
-            System.out.println("1. Add food");
-            System.out.println("2. Display all food");
-            System.out.println("3. Show first food");
-            System.out.println("4. Remove food");
-            System.out.println("5. Search food");
-            System.out.println("x. Exit");
-            System.out.print("Choose an option: ");
 
-            int option = Integer.parseInt(myKB.nextLine());
+            // If this returns false, the chef chose to exit the application
+            if (!runStorageMenu(myKB, storage)) {
+                break;
+            }
+        }
+
+        System.out.println("Program closed.");
+        myKB.close();
+    }
+
+    // Show the menu for the selected option, Stack or Queue
+    private static boolean runStorageMenu(Scanner myKB, FoodStorage storage) {
+        while (true) {
+            System.out.println("\n===== FOOD STORAGE =====");
+            System.out.println("Storage System: " + storage.getSystemName());
+            System.out.println("Capacity: " + storage.size() + "/" + storage.getCapacity());
+
+            if (storage.isFull()) {
+                System.out.println("Storage Status: FULL - No more food can be added!");
+            } else {
+                System.out.println("Storage Status: Available");
+            }
+
+            System.out.println("1. Add Food");
+            System.out.println("2. Remove Food");
+            System.out.println("3. Peek Top/Front Food");
+            System.out.println("4. Display All Food");
+            System.out.println("5. Search Food");
+            System.out.println("6. Return to Storage System Menu");
+            System.out.println("0. Exit Application");
+
+            int option = InputValidator.readInt(myKB, "Choose an option: ", 0, 6);
 
             switch (option) {
-
                 case 1:
-
-                    // Ask for the food type
-                    System.out.println("\nChoose the food type:");
-                    System.out.println("1. Burger");
-                    System.out.println("2. Pizza");
-                    System.out.println("3. Fries");
-                    System.out.println("4. Sandwich");
-                    System.out.println("5. Hotdog");
-                    System.out.print("Your choice: ");
-
-                    int choice = Integer.parseInt(myKB.nextLine());
-
-                    String type;
-
-                    //Save the selected food type
-                    switch (choice) {
-                        case 1:
-                            type = "Burger";
-                            break;
-                        case 2:
-                            type = "Pizza";
-                            break;
-                        case 3:
-                            type = "Fries";
-                            break;
-                        case 4:
-                            type = "Sandwich";
-                            break;
-                        case 5:
-                            type = "Hotdog";
-                            break;
-                        default:
-                            System.out.println("Invalid Food Type");
-                            break;
-                    }
-
-                    // Check if the selected food type is valid
-                    if (choice < 1 || choice > 5) {
-                        break;
-                    }
-
-                    // Save the selected food type
-                    type = switch (choice) {
-                        case 1 -> "Burger";
-                        case 2 -> "Pizza";
-                        case 3 -> "Fries";
-                        case 4 -> "Sandwich";
-                        default -> "Hotdog";
-                    };
-
-                    // Ask for the food name
-                    System.out.println("Enter the food name: ");
-                    String name = myKB.nextLine();
-
-                    // Ask for the food weight
-                    System.out.println("Enter the weight in grams: ");
-                    double weight = Double.parseDouble(myKB.nextLine());
-
-                    // Ask for the best before date
-                    System.out.println("Enter the best-before date (dd/MM/yyyy): ");
-                    String dateText = myKB.nextLine();
-
-                    try {
-                        LocalDate bestBefore
-                                = LocalDate.parse(dateText, formatter);
-
-                        // Check if the date is within the next two weeks
-                        if (bestBefore.isBefore(LocalDate.now())
-                                || bestBefore.isAfter(LocalDate.now().plusWeeks(2))) {
-
-                            System.out.println(
-                                    "The date must be between today and two weeks from today.");
-
-                            break;
-                        }
-
-                        // Add the food item to the storage
-                        storage.addFood(type, name, weight, bestBefore);
-
-                        // Display the stored food item
-                        System.out.println("\nFood added successfully!");
-                        System.out.println("Added item: " + name);
-
-                        // Display the stored food items
-                        System.out.println("\nCurrent storage:");
-                        storage.display();
-
-                    } catch (DateTimeParseException e) {
-                        System.out.println(
-                                "Invalid date. Please use dd/MM/yyyy.");
-                    }
+                    addFood(myKB, storage);
                     break;
-
                 case 2:
-                    // Display all food items
+                    removeFood(storage);
+                    break;
+                case 3:
+                    peekFood(storage);
+                    break;
+                case 4:
                     storage.display();
                     break;
-
-                case 3:
-                    // Show the first food item
-                    storage.peek();
-                    break;
-
-                case 4:
-                    // Choose the removal mode
-                    System.out.println("\nChoose the removal mode:");
-                    System.out.println("1. FIFO (Queue) - Remove the first food");
-                    System.out.println("2. LIFO (Stack) - Remove the last food");
-                    System.out.print("Your choice: ");
-
-                    int removeChoice = Integer.parseInt(myKB.nextLine());
-
-                    switch (removeChoice) {
-                        case 1:
-                            // Remove the first food item
-                            storage.removeFromFront();
-                            break;
-
-                        case 2:
-                            // Remove the last food item
-                            storage.removeFromBack();
-                            break;
-
-                        default:
-                            System.out.println("Invalid removal option.");
-                            break;
-                    }
-                    break;
-
                 case 5:
-                    // Search for a food item
-                    System.out.print("Enter the food name to search: ");
-                    String searchName = myKB.nextLine();
-                    storage.search(searchName);
+                    // There is nothing to search if the storage is empty
+                    if (storage.size() == 0) {
+                        System.out.println("Storage is empty!");
+                        break;
+                    }
+                    String name = InputValidator.readText(myKB, "Enter the food name to search: ");
+                    storage.search(name);
                     break;
-
                 case 6:
-                    // Stop the menu
-                    running = false;
-                    System.out.println("Program closed.");
-                    break;
-
+                    return true;  // Go back to the first menu
+                case 0:
+                    return false; // Exit the application
                 default:
                     System.out.println("Invalid option.");
                     break;
+            }
 
-            } // End of switch
-
-        // Wait before showing the menu again
-        if (running) {
-            System.out.println("\nPress Enter to return to the menu...");
+            // Wait so the chef can read the result before the menu returns
+            System.out.println("\nPress Enter to continue =) ! ");
             myKB.nextLine();
         }
+    }
 
-    } // End of while
+    // Ask for food details and add the food item
+    private static void addFood(Scanner myKB, FoodStorage storage) {
+        if (storage.isFull()) {
+            System.out.println("Storage is full. Remove an item first!");
+            return;
+        }
 
-    myKB.close();
+        System.out.println("\nChoose the food type:");
+        for (int i = 0; i < FOOD_TYPES.length; i++) {
+            System.out.println((i + 1) + ". " + FOOD_TYPES[i]);
+        }
+
+        int typeChoice = InputValidator.readInt(myKB, "Your choice: ", 1, FOOD_TYPES.length);
+        String type = FOOD_TYPES[typeChoice - 1];
+
+        String name = InputValidator.readText(myKB, "Enter the food name: ");
+        double weight = InputValidator.readWeight(myKB);
+        LocalDate bestBefore = InputValidator.readBestBeforeDate(myKB);
+
+        FoodItem item = new FoodItem(type, name, weight, bestBefore);
+        storage.add(item);
+        System.out.println("Food added successfully.");
+
+        if (storage.isFull()) {
+            System.out.println("Storage is now full!");
+        }
+    }
+
+    // Remove the next item according to the selected data structure
+    private static void removeFood(FoodStorage storage) {
+        FoodItem item = storage.remove();
+
+        if (item == null) {
+            System.out.println("Storage is empty.");
+        } else {
+            System.out.println("Removed food:");
+            item.displayInfo();
+        }
+    }
+
+    // Show the next item without removing it
+    private static void peekFood(FoodStorage storage) {
+        FoodItem item = storage.peek();
+
+        if (item == null) {
+            System.out.println("Storage is empty!");
+        } else {
+            item.displayInfo();
+        }
     }
 }

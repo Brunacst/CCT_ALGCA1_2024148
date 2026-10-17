@@ -5,22 +5,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-// This class stores the information about one food item.
+// This class stores the information about one food item
 public class FoodItem {
 
-    // Store the type of food, for example Burger or Pizza.
+    // Store the type of food, for example Burger or Pizza
     private String type;
 
-    // Store the name of the food item.
+    // Store the name of the food item
     private String name;
 
-    // Store the weight of the food in grams.
+    // Store the weight of the food in grams
     private double weight;
 
-    // Store the best-before date of the food.
+    // Store the best-before date of the food
     private LocalDate bestBefore;
 
-    // Store the date and time when the food was added.
+    // Store the date and time when the food was added
     private LocalDateTime timeAdded;
 
     // Create a food item with its details.
@@ -30,36 +30,36 @@ public class FoodItem {
         this.weight = weight;
         this.bestBefore = bestBefore;
 
-        // Save the current date and time.
+        // Save the current date and time
         this.timeAdded = LocalDateTime.now();
     }
 
-    // Return the food type.
+    // Return the food type
     public String getType() {
         return type;
     }
 
-    // Return the food name.
+    // Return the food name
     public String getName() {
         return name;
     }
 
-    // Return the food weight.
+    // Return the food weight
     public double getWeight() {
         return weight;
     }
 
-    // Return the best-before date.
+    // Return the best-before date
     public LocalDate getBestBefore() {
         return bestBefore;
     }
 
-    // Return the date and time when the food was added.
+    // Return the date and time when the food was added
     public LocalDateTime getTimeAdded() {
         return timeAdded;
     }
 
-    // Display all information about the food item.
+    // Display all information about the food item
     public void displayInfo() {
         System.out.println("------------------------------");
         System.out.println("Type: " + type);
